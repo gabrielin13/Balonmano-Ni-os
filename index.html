@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FF6B35">
+    <meta name="description" content="¡Aprende Balonmano! Infografía interactiva para niños de 8 a 12 años">
+    <title>¡Aprende Balonmano!</title>
+
+    <!-- Manifest embebido como data URI -->
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQXByZW5kZSBCYWxvbm1hbm8iLCJzaG9ydF9uYW1lIjoiQmFsb25tYW5vIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNGRkY5RjAiLCJ0aGVtZV9jb2xvciI6IiNGRjZCMzUifQ==">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== RESET Y VARIABLES ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orange: #FF6B35;
+            --yellow: #FFD60A;
+            --blue: #1B74E4;
+            --green: #2ECC71;
+            --red: #E74C3C;
+            --bg: #FFF9F0;
+            --fg: #2D2D2D;
+            --muted: #7A7A7A;
+            --card: #FFFFFF;
+            --border: #F0E6D8;
+            --radius: 20px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 12px 36px rgba(255,107,53,0.18);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 18px;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Baloo 2', cursive;
+            line-height: 1.2;
+        }
+
+        img, svg { max-width: 100%; display: block; }
+
+        /* ===== ANIMACIONES ===== */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
+        }
+
+        @keyframes wiggle {
+            0%, 85%, 100% { transform: rotate(0deg); }
+            88% { transform: rotate(-8deg); }
+            91% { transform: rotate(8deg); }
+            94% { transform: rotate(-5deg); }
+            97% { transform: rotate(5deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes confettiPop {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes spinBall {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Respetar prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 24px;
+            position: relative;
+            background: var(--bg);
+            overflow: hidden;
+        }
+
+        /* Formas decorativas de fondo del hero */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: rgba(255,107,53,0.08);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: rgba(27,116,228,0.06);
+            pointer-events: none;
+        }
+
+        .hero-mascot {
+            font-size: 5rem;
+            animation: bounce 2s ease-in-out infinite;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1));
+        }
+
+        .hero-title {
+            font-size: clamp(2.4rem, 7vw, 4.2rem);
+            font-weight: 800;
+            color: var(--orange);
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 0 rgba(255,107,53,0.12);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--yellow);
+            color: var(--fg);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 8px 24px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: var(--muted);
+            max-width: 520px;
+            position: relative;
+            z-index: 1;
+            font-weight: 600;
+        }
+
+        .hero-scroll-hint {
+            margin-top: 40px;
+            animation: bounce 2s ease-in-out infinite;
+            font-size: 1.5rem;
+            color: var(--orange);
+            opacity: 0.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== SECCIÓN COMÚN ===== */
+        section {
+            padding: 60px 24px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(1.6rem, 5vw, 2.4rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--muted);
+            font-size: 1rem;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        /* ===== BURBUJA GUÍA ===== */
+        .guide-bubble {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            box-shadow: var(--shadow);
+            border-left: 6px solid var(--orange);
+            max-width: 720px;
+            margin: 0 auto 20px;
+        }
+
+        .guide-mascot {
+            font-size: 3rem;
+            flex-shrink: 0;
+            animation: wiggle 3s ease-in-out infinite;
+        }
+
+        .guide-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--fg);
+        }
+        .guide-text strong {
+            color: var(--orange);
+        }
+
+        /* ===== IDEA CENTRAL ===== */
+        .central-idea {
+            text-align: center;
+            padding: 50px 24px;
+        }
+
+        .goal-card {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--orange);
+            color: #fff;
+            border-radius: 32px;
+            padding: 48px 64px;
+            box-shadow: 0 12px 48px rgba(255,107,53,0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .goal-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(255,107,53,0.35);
+        }
+        .goal-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .goal-card .emoji-ball {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            animation: spinBall 4s linear infinite;
+        }
+
+        .goal-card .goal-word {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(4rem, 12vw, 7rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: 4px;
+        }
+
+        .goal-card .goal-desc {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 8px;
+            opacity: 0.92;
+        }
+
+        /* ===== DATOS CLAVE — FLIP CARDS ===== */
+        .key-data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .flip-card {
+            perspective: 800px;
+            height: 260px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner,
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: var(--radius);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .flip-card-front {
+            background: var(--card);
+            border: 3px solid var(--border);
+        }
+
+        .flip-card-back {
+            background: var(--blue);
+            color: #fff;
+            transform: rotateY(180deg);
+            border: 3px solid var(--blue);
+        }
+
+        .flip-card:hover .flip-card-front {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .flip-card .card-number {
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--orange);
+            background: rgba(255,107,53,0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flip-card .card-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        .flip-card .card-value {
+            font-family: 'Baloo 2', cursive;
+            font-size: 2.4rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .flip-card .card-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .flip-card-back .back-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .flip-card-back .back-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* Colores específicos por carta */
+        .flip-card:nth-child(1) .flip-card-front { border-color: var(--orange); }
+        .flip-card:nth-child(2) .flip-card-front { border-color: var(--green); }
+        .flip-card:nth-child(3) .flip-card-front { border-color: var(--blue); }
+        .flip-card:nth-child(4) .flip-card-front { border-color: var(--red); }
+
+        .flip-card:nth-child(1) .flip-card-back { background: var(--orange); border-color: var(--orange); }
+        .flip-card:nth-child(2) .flip-card-back { background: var(--green); border-color: var(--green); }
+        .flip-card:nth-child(3) .flip-card-back { background: var(--blue); border-color: var(--blue); }
+        .flip-card:nth-child(4) .flip-card-back { background: var(--red); border-color: var(--red); }
+
+        .flip-card:nth-child(1) .card-number { color: var(--orange); background: rgba(255,107,53,0.1); }
+        .flip-card:nth-child(2) .card-number { color: var(--green); background: rgba(46,204,113,0.1); }
+        .flip-card:nth-child(3) .card-number { color: var(--blue); background: rgba(27,116,228,0.1); }
+        .flip-card:nth-child(4) .card-number { color: var(--red); background: rgba(231,76,60,0.1); }
+
+        /* ===== PASOS PARA ANOTAR ===== */
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            box-shadow: var(--shadow);
+            border-left: 6px solid var(--orange);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+        }
+        .step-item:hover {
+            transform: translateX(8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .step-item:nth-child(2) { border-left-color: var(--blue); }
+        .step-item:nth-child(3) { border-left-color: var(--green); }
+
+        .step-number {
+            font-family: 'Baloo 2', cursive;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--orange);
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,107,53,0.1);
+        }
+        .step-item:nth-child(2) .step-number { color: var(--blue); background: rgba(27,116,228,0.1); }
+        .step-item:nth-child(3) .step-number { color: var(--green); background: rgba(46,204,113,0.1); }
+
+        .step-content h3 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+        .step-content p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            font-weight: 600;
+        }
+        .step-emoji {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        /* ===== CAMPO DE BALONMANO (SVG) ===== */
+        .field-section {
+            text-align: center;
+        }
+
+        .field-svg-container {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            display: inline-block;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .field-svg-container svg {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .field-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--muted);
+        }
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ===== PORTERO ===== */
+        .goalkeeper-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 36px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            max-width: 680px;
+            margin: 0 auto;
+            border: 3px solid var(--red);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .goalkeeper-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 16px 48px rgba(231,76,60,0.15);
+        }
+        .goalkeeper-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
+            background: rgba(231,76,60,0.06);
+            border-radius: 0 0 0 100%;
+            pointer-events: none;
+        }
+        .gk-icon {
+            font-size: 4rem;
+            flex-shrink: 0;
+            animation: float 3s ease-in-out infinite;
+        }
+        .gk-content h3 {
+            font-size: 1.5rem;
+            color: var(--red);
+            margin-bottom: 6px;
+        }
+        .gk-content p {
+            font-size: 0.95rem;
+            color: var(--fg);
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .gk-badge {
+            display: inline-block;
+            background: rgba(231,76,60,0.1);
+            color: var(--red);
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 4px 14px;
+            border-radius: 50px;
+            margin-top: 8px;
+        }
+
+        /* ===== DATOS CURIOSOS ===== */
+        .fun-facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .fact-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--yellow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+        }
+        .fact-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+        .fact-card .fact-emoji {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        .fact-card h4 {
+            font-size: 1rem;
+            color: var(--fg);
+            margin-bottom: 6px;
+        }
+        .fact-card p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        /* ===== QUIZ ===== */
+        .quiz-container {
+            max-width: 640px;
+            margin: 0 auto;
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 36px;
+            box-shadow: var(--shadow);
+            border: 3px solid var(--blue);
+            position: relative;
+        }
+
+        .quiz-progress {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .quiz-progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .quiz-progress-dot.active { background: var(--blue); transform: scale(1.3); }
+        .quiz-progress-dot.correct { background: var(--green); }
+        .quiz-progress-dot.wrong { background: var(--red); }
+
+        .quiz-question-num {
+            font-family: 'Baloo 2', cursive;
+            font-size: 0.9rem;
+            color: var(--blue);
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .quiz-question {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--fg);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: #fff;
+            min-height: 56px;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--blue);
+            background: rgba(27,116,228,0.04);
+            transform: translateX(4px);
+        }
+        .quiz-option .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+        }
+        .quiz-option:hover:not(.disabled) .option-letter {
+            background: var(--blue);
+            color: #fff;
+        }
+        .quiz-option.correct {
+            border-color: var(--green);
+            background: rgba(46,204,113,0.08);
+        }
+        .quiz-option.correct .option-letter {
+            background: var(--green);
+            color: #fff;
+        }
+        .quiz-option.wrong {
+            border-color: var(--red);
+            background: rgba(231,76,60,0.08);
+        }
+        .quiz-option.wrong .option-letter {
+            background: var(--red);
+            color: #fff;
+        }
+        .quiz-option.disabled {
+            cursor: default;
+            opacity: 0.6;
+        }
+        .quiz-option.correct.disabled,
+        .quiz-option.wrong.disabled {
+            opacity: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 20px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: none;
+        }
+        .quiz-feedback.show { display: block; }
+        .quiz-feedback.correct-fb {
+            background: rgba(46,204,113,0.1);
+            color: var(--green);
+        }
+        .quiz-feedback.wrong-fb {
+            background: rgba(231,76,60,0.1);
+            color: var(--red);
+        }
+
+        .quiz-next-btn {
+            margin-top: 20px;
+            padding: 14px 32px;
+            background: var(--blue);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: none;
+            min-height: 50px;
+            min-width: 160px;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .quiz-next-btn:hover { background: #1560c0; transform: scale(1.03); }
+        .quiz-next-btn.show { display: inline-block; }
+
+        .quiz-result {
+            text-align: center;
+            display: none;
+        }
+        .quiz-result.show { display: block; }
+        .quiz-result .result-score {
+            font-family: 'Baloo 2', cursive;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--orange);
+        }
+        .quiz-result .result-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+        .quiz-result .result-emoji {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+        .quiz-restart-btn {
+            margin-top: 20px;
+            padding: 14px 32px;
+            background: var(--orange);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            min-height: 50px;
+            min-width: 180px;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .quiz-restart-btn:hover { background: #e55a28; transform: scale(1.03); }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 3px solid var(--border);
+            margin-top: 40px;
+        }
+        footer p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            font-weight: 600;
+        }
+        footer .footer-phrase {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.2rem;
+            color: var(--orange);
+            margin-top: 8px;
+            font-weight: 700;
+        }
+
+        /* ===== PWA INSTALL BANNER ===== */
+        .pwa-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card);
+            padding: 16px 24px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            z-index: 1000;
+            transform: translateY(100px);
+            transition: transform 0.5s ease;
+            border-top: 3px solid var(--orange);
+        }
+        .pwa-banner.show {
+            transform: translateY(0);
+        }
+        .pwa-banner p {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .pwa-install-btn {
+            padding: 10px 24px;
+            background: var(--orange);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            min-height: 44px;
+        }
+        .pwa-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--muted);
+            padding: 4px;
+            min-width: 44px;
+            min-height: 44px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero-mascot { font-size: 3.5rem; }
+            .goal-card { padding: 36px 40px; }
+            .goal-card .goal-word { font-size: clamp(3rem, 12vw, 5rem); }
+            .key-data-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .flip-card { height: 230px; }
+            .guide-bubble { flex-direction: column; align-items: center; text-align: center; }
+            .goalkeeper-card { flex-direction: column; text-align: center; }
+            .gk-icon { font-size: 3rem; }
+            .quiz-container { padding: 24px; }
+            .field-svg-container { padding: 12px; }
+            .fun-facts-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            html { font-size: 16px; }
+            section { padding: 40px 16px; }
+            .key-data-grid { grid-template-columns: 1fr; }
+            .flip-card { height: 220px; }
+            .step-item { padding: 18px 20px; }
+            .quiz-container { padding: 20px 16px; }
+        }
+
+        /* ===== FOCUS VISIBLE ===== */
+        *:focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 2px;
+        }
+
+        /* Decorative shapes */
+        .deco-circle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.06;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HERO ===== -->
+    <header class="hero" role="banner">
+        <div class="hero-mascot" aria-hidden="true">🦁</div>
+        <h1 class="hero-title">Aprende Balonmano</h1>
+        <span class="hero-badge">Deporte en equipo</span>
+        <p class="hero-subtitle">Descubre el deporte mas rapido y divertido del mundo. Pasa, lanza y anota goles.</p>
+        <div class="hero-scroll-hint" aria-hidden="true">↓</div>
+    </header>
+
+    <main>
+
+        <!-- ===== BURBUJA GUÍA ===== -->
+        <section class="reveal" aria-label="Introducción de la mascota">
+            <div class="guide-bubble">
+                <div class="guide-mascot" aria-hidden="true">🦁</div>
+                <p class="guide-text">
+                    Sabias que el balonmano es uno de los deportes mas rapidos del mundo?
+                    <strong>Acompañame y descubre como se juega.</strong>
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== IDEA CENTRAL ===== -->
+        <section class="central-idea reveal" aria-label="Idea central del balonmano">
+            <h2 class="section-title" style="margin-bottom: 32px;">El objetivo del juego</h2>
+            <div class="goal-card" role="img" aria-label="El objetivo del balonmano es marcar goles">
+                <span class="emoji-ball" aria-hidden="true">🤾</span>
+                <span class="goal-word">GOL</span>
+                <span class="goal-desc">El objetivo es marcar mas goles que el rival</span>
+            </div>
+        </section>
+
+        <!-- ===== DATOS CLAVE ===== -->
+        <section class="reveal" aria-label="Datos clave del balonmano">
+            <h2 class="section-title">Datos clave</h2>
+            <p class="section-subtitle">Pasa el cursor sobre cada carta para saber mas</p>
+            <div class="key-data-grid" role="list">
+
+                <div class="flip-card" role="listitem" tabindex="0" aria-label="7 jugadores por equipo">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="card-number">1</span>
+                            <span class="card-icon" aria-hidden="true">👥</span>
+                            <span class="card-value" style="color:var(--orange);">7</span>
+                            <span class="card-label">Jugadores por equipo</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <span class="back-title">7 jugadores</span>
+                            <span class="back-text">Cada equipo tiene 7 jugadores en la cancha: 6 de campo y 1 portero. Pueden hacer hasta 7 sustituciones.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" role="listitem" tabindex="0" aria-label="3 pasos con la pelota">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="card-number">2</span>
+                            <span class="card-icon" aria-hidden="true">👟</span>
+                            <span class="card-value" style="color:var(--green);">3</span>
+                            <span class="card-label">Pasos con la pelota</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <span class="back-title">3 pasos maximo</span>
+                            <span class="back-text">Solo puedes dar 3 pasos con la pelota en las manos. Para avanzar mas, debes botar la pelota.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" role="listitem" tabindex="0" aria-label="30 minutos por tiempo">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="card-number">3</span>
+                            <span class="card-icon" aria-hidden="true">⏱️</span>
+                            <span class="card-value" style="color:var(--blue);">30</span>
+                            <span class="card-label">Minutos por tiempo</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <span class="back-title">2 tiempos de 30 min</span>
+                            <span class="back-text">Un partido tiene dos tiempos de 30 minutos cada uno, con un descanso de 10 minutos entre ellos.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" role="listitem" tabindex="0" aria-label="Zona de 6 metros del portero">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="card-number">4</span>
+                            <span class="card-icon" aria-hidden="true">🛡️</span>
+                            <span class="card-value" style="color:var(--red);">6m</span>
+                            <span class="card-label">Zona del portero</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <span class="back-title">Zona de 6 metros</span>
+                            <span class="back-text">Solo el portero puede pisar la zona de 6 metros alrededor de la porteria. Los demas deben lanzar desde fuera.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== PASOS PARA ANOTAR ===== -->
+        <section class="reveal" aria-label="Pasos para anotar un gol">
+            <h2 class="section-title">Como anotar un gol</h2>
+            <p class="section-subtitle">Sigue estos 3 pasos y seras un crack</p>
+            <div class="steps-container" role="list">
+
+                <div class="step-item" role="listitem">
+                    <span class="step-number">1</span>
+                    <div class="step-content">
+                        <h3>Avanza pasando la pelota</h3>
+                        <p>Pasa a tus companeros y muevete sin la pelota para crear espacios.</p>
+                    </div>
+                    <span class="step-emoji" aria-hidden="true">🤲</span>
+                </div>
+
+                <div class="step-item" role="listitem">
+                    <span class="step-number">2</span>
+                    <div class="step-content">
+                        <h3>Lanza hacia la porteria</h3>
+                        <p>Desde fuera de la zona de 6m, lanza con fuerza y punteria.</p>
+                    </div>
+                    <span class="step-emoji" aria-hidden="true">🏹</span>
+                </div>
+
+                <div class="step-item" role="listitem">
+                    <span class="step-number">3</span>
+                    <div class="step-content">
+                        <h3>Marca gol</h3>
+                        <p>Si la pelota entra en la porteria, sumas un punto para tu equipo.</p>
+                    </div>
+                    <span class="step-emoji" aria-hidden="true">🏆</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== EL CAMPO ===== -->
+        <section class="field-section reveal" aria-label="Campo de balonmano">
+            <h2 class="section-title">El campo de juego</h2>
+            <p class="section-subtitle">Mide 40 metros de largo por 20 metros de ancho</p>
+
+            <div class="field-svg-container">
+                <svg viewBox="0 0 440 260" width="440" height="260" role="img" aria-label="Diagrama del campo de balonmano con sus medidas y zonas principales">
+                    <!-- Fondo del campo -->
+                    <rect x="20" y="20" width="400" height="220" rx="4" fill="#5DB85D" stroke="#fff" stroke-width="2"/>
+
+                    <!-- Línea central -->
+                    <line x1="220" y1="20" x2="220" y2="240" stroke="#fff" stroke-width="2" stroke-dasharray="8,4"/>
+
+                    <!-- Círculo central -->
+                    <circle cx="220" cy="130" r="30" fill="none" stroke="#fff" stroke-width="2"/>
+
+                    <!-- Zona de 6m izquierda -->
+                    <path d="M 20 80 A 60 60 0 0 1 20 180" fill="rgba(231,76,60,0.2)" stroke="#fff" stroke-width="2"/>
+
+                    <!-- Zona de 6m derecha -->
+                    <path d="M 420 80 A 60 60 0 0 0 420 180" fill="rgba(231,76,60,0.2)" stroke="#fff" stroke-width="2"/>
+
+                    <!-- Línea de 9m izquierda (discontinua) -->
+                    <path d="M 20 60 A 90 90 0 0 1 20 200" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+                    <!-- Línea de 9m derecha (discontinua) -->
+                    <path d="M 420 60 A 90 90 0 0 0 420 200" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+                    <!-- Portería izquierda -->
+                    <rect x="14" y="110" width="6" height="40" rx="2" fill="#E74C3C" stroke="#fff" stroke-width="1.5"/>
+
+                    <!-- Portería derecha -->
+                    <rect x="420" y="110" width="6" height="40" rx="2" fill="#E74C3C" stroke="#fff" stroke-width="1.5"/>
+
+                    <!-- Línea de 7m izquierda -->
+                    <line x1="72" y1="120" x2="72" y2="140" stroke="#FFD60A" stroke-width="2.5"/>
+
+                    <!-- Línea de 7m derecha -->
+                    <line x1="368" y1="120" x2="368" y2="140" stroke="#FFD60A" stroke-width="2.5"/>
+
+                    <!-- Jugadores representados -->
+                    <!-- Portero izquierdo -->
+                    <circle cx="28" cy="130" r="8" fill="#1B74E4" stroke="#fff" stroke-width="2"/>
+                    <text x="28" y="134" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">P</text>
+
+                    <!-- Portero derecho -->
+                    <circle cx="412" cy="130" r="8" fill="#FF6B35" stroke="#fff" stroke-width="2"/>
+                    <text x="412" y="134" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">P</text>
+
+                    <!-- Jugadores de campo azules (izquierda) -->
+                    <circle cx="90" cy="70" r="6" fill="#1B74E4" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="90" cy="130" r="6" fill="#1B74E4" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="90" cy="190" r="6" fill="#1B74E4" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="120" cy="100" r="6" fill="#1B74E4" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="120" cy="160" r="6" fill="#1B74E4" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="150" cy="130" r="6" fill="#1B74E4" stroke="#fff" stroke-width="1.5"/>
+
+                    <!-- Jugadores de campo naranjas (derecha) -->
+                    <circle cx="350" cy="70" r="6" fill="#FF6B35" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="350" cy="130" r="6" fill="#FF6B35" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="350" cy="190" r="6" fill="#FF6B35" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="320" cy="100" r="6" fill="#FF6B35" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="320" cy="160" r="6" fill="#FF6B35" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="290" cy="130" r="6" fill="#FF6B35" stroke="#fff" stroke-width="1.5"/>
+
+                    <!-- Pelota -->
+                    <circle cx="200" cy="130" r="5" fill="#FFD60A" stroke="#fff" stroke-width="1.5"/>
+
+                    <!-- Etiquetas de medida -->
+                    <text x="220" y="256" text-anchor="middle" fill="#2D2D2D" font-size="11" font-weight="700" font-family="Nunito, sans-serif">40 m</text>
+                    <text x="8" y="136" text-anchor="middle" fill="#2D2D2D" font-size="11" font-weight="700" font-family="Nunito, sans-serif" transform="rotate(-90,8,136)">20 m</text>
+
+                    <!-- Etiquetas de zona -->
+                    <text x="55" y="134" text-anchor="middle" fill="#fff" font-size="8" font-weight="700" font-family="Nunito, sans-serif">6m</text>
+                    <text x="385" y="134" text-anchor="middle" fill="#fff" font-size="8" font-weight="700" font-family="Nunito, sans-serif">6m</text>
+                    <text x="72" y="152" text-anchor="middle" fill="#FFD60A" font-size="8" font-weight="700" font-family="Nunito, sans-serif">7m</text>
+                    <text x="368" y="152" text-anchor="middle" fill="#FFD60A" font-size="8" font-weight="700" font-family="Nunito, sans-serif">7m</text>
+                </svg>
+            </div>
+
+            <div class="field-legend" aria-label="Leyenda del diagrama">
+                <div class="legend-item"><div class="legend-dot" style="background:rgba(231,76,60,0.3);"></div>Zona de 6m</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#FFD60A;"></div>Linea de penalti (7m)</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#1B74E4;"></div>Equipo azul</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#FF6B35;"></div>Equipo naranja</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#FFD60A;"></div>Pelota</div>
+            </div>
+        </section>
+
+        <!-- ===== EL PORTERO ===== -->
+        <section class="reveal" aria-label="El portero">
+            <h2 class="section-title">El portero</h2>
+            <p class="section-subtitle">El jugador mas especial del equipo</p>
+            <div class="goalkeeper-card">
+                <span class="gk-icon" aria-hidden="true">🧤</span>
+                <div class="gk-content">
+                    <h3>El guardian de la porteria</h3>
+                    <p>El portero es el unico que puede tocar la pelota con los pies y entrar en la zona de 6 metros. Su mision es evitar que la pelota entre en la porteria. Puede usar todo su cuerpo para parar los lanzamientos.</p>
+                    <span class="gk-badge">Jugador especial</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== DATOS CURIOSOS ===== -->
+        <section class="reveal" aria-label="Datos curiosos sobre el balonmano">
+            <h2 class="section-title">Datos curiosos</h2>
+            <p class="section-subtitle">Cosas que no sabias del balonmano</p>
+            <div class="fun-facts-grid">
+
+                <div class="fact-card">
+                    <span class="fact-emoji" aria-hidden="true">🏛️</span>
+                    <h4>Origen antiguo</h4>
+                    <p>Juegos parecidos al balonmano se jugaban en el antiguo Egipto hace mas de 4000 anos.</p>
+                </div>
+
+                <div class="fact-card">
+                    <span class="fact-emoji" aria-hidden="true">🏅</span>
+                    <h4>Deporte olimpico</h4>
+                    <p>El balonmano es olimpico desde 1972 en hombres y 1976 en mujeres.</p>
+                </div>
+
+                <div class="fact-card">
+                    <span class="fact-emoji" aria-hidden="true">⚡</span>
+                    <h4>Muy veloz</h4>
+                    <p>La pelota puede viajar a mas de 100 km/h en un lanzamiento profesional.</p>
+                </div>
+
+                <div class="fact-card">
+                    <span class="fact-emoji" aria-hidden="true">🏖️</span>
+                    <h4>Beach handball</h4>
+                    <p>Existe una version en la playa con 4 jugadores por equipo y lanzamientos acrobaticos.</p>
+                </div>
+
+                <div class="fact-card">
+                    <span class="fact-emoji" aria-hidden="true">🌍</span>
+                    <h4>Mundial cada 2 anos</h4>
+                    <p>El campeonato del mundo se celebra cada dos anos, alternando categorias.</p>
+                </div>
+
+                <div class="fact-card">
+                    <span class="fact-emoji" aria-hidden="true">🔄</span>
+                    <h4>Cambios ilimitados</h4>
+                    <p>Los equipos pueden hacer todos los cambios que quieran durante el partido.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== QUIZ INTERACTIVO ===== -->
+        <section class="reveal" aria-label="Quiz interactivo sobre balonmano">
+            <h2 class="section-title">Demuestra lo que aprendiste</h2>
+            <p class="section-subtitle">Responde 4 preguntas sobre el balonmano</p>
+
+            <div class="quiz-container" id="quiz">
+                <div class="quiz-progress" id="quizProgress" aria-label="Progreso del quiz">
+                    <div class="quiz-progress-dot active" aria-hidden="true"></div>
+                    <div class="quiz-progress-dot" aria-hidden="true"></div>
+                    <div class="quiz-progress-dot" aria-hidden="true"></div>
+                    <div class="quiz-progress-dot" aria-hidden="true"></div>
+                </div>
+
+                <div id="quizBody">
+                    <div class="quiz-question-num" id="questionNum">Pregunta 1 de 4</div>
+                    <div class="quiz-question" id="questionText"></div>
+                    <div class="quiz-options" id="quizOptions" role="radiogroup" aria-label="Opciones de respuesta"></div>
+                    <div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div>
+                    <button class="quiz-next-btn" id="quizNextBtn" aria-label="Siguiente pregunta">Siguiente</button>
+                </div>
+
+                <div class="quiz-result" id="quizResult">
+                    <div class="result-emoji" aria-hidden="true"></div>
+                    <div class="result-score" id="resultScore"></div>
+                    <div class="result-text" id="resultText"></div>
+                    <button class="quiz-restart-btn" id="quizRestartBtn" aria-label="Jugar de nuevo">Jugar de nuevo</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer role="contentinfo">
+        <p>Creado por: <strong>Gabriel Adrian Navarro Puertas</strong></p>
+        <p class="footer-phrase">El balonmano te espera. Ponte las zapatillas y a jugar.</p>
+    </footer>
+
+    <!-- ===== PWA BANNER ===== -->
+    <div class="pwa-banner" id="pwaBanner" role="dialog" aria-label="Instalar aplicación">
+        <p>Instala esta app para usarla sin internet</p>
+        <button class="pwa-install-btn" id="pwaInstallBtn">Instalar</button>
+        <button class="pwa-close-btn" id="pwaCloseBtn" aria-label="Cerrar banner">✕</button>
+    </div>
+
+    <script>
+        /* ====================================
+           QUIZ INTERACTIVO
+        ==================================== */
+        const quizData = [
+            {
+                question: "Cuantos jugadores tiene cada equipo en la cancha?",
+                options: ["5 jugadores", "6 jugadores", "7 jugadores", "11 jugadores"],
+                correct: 2,
+                explanation: "Cada equipo tiene 7 jugadores: 6 de campo y 1 portero."
+            },
+            {
+                question: "Cuantos pasos puedes dar con la pelota en las manos?",
+                options: ["2 pasos", "3 pasos", "5 pasos", "Sin limite"],
+                correct: 1,
+                explanation: "Solo puedes dar 3 pasos con la pelota. Para avanzar mas, debes botarla."
+            },
+            {
+                question: "Cuanto dura cada tiempo de un partido?",
+                options: ["20 minutos", "25 minutos", "30 minutos", "45 minutos"],
+                correct: 2,
+                explanation: "Cada tiempo dura 30 minutos, con un descanso de 10 minutos."
+            },
+            {
+                question: "Quien puede entrar en la zona de 6 metros?",
+                options: ["Cualquier jugador", "Solo el capitan", "Solo el portero", "Los delanteros"],
+                correct: 2,
+                explanation: "Solo el portero puede estar en la zona de 6 metros alrededor de la porteria."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        const questionNum = document.getElementById('questionNum');
+        const questionText = document.getElementById('questionText');
+        const quizOptions = document.getElementById('quizOptions');
+        const quizFeedback = document.getElementById('quizFeedback');
+        const quizNextBtn = document.getElementById('quizNextBtn');
+        const quizResult = document.getElementById('quizResult');
+        const resultScore = document.getElementById('resultScore');
+        const resultText = document.getElementById('resultText');
+        const quizRestartBtn = document.getElementById('quizRestartBtn');
+        const quizProgress = document.getElementById('quizProgress');
+        const progressDots = quizProgress.querySelectorAll('.quiz-progress-dot');
+
+        /* Cargar pregunta */
+        function loadQuestion() {
+            answered = false;
+            const data = quizData[currentQuestion];
+
+            questionNum.textContent = `Pregunta ${currentQuestion + 1} de ${quizData.length}`;
+            questionText.textContent = data.question;
+
+            /* Actualizar puntos de progreso */
+            progressDots.forEach((dot, i) => {
+                dot.classList.remove('active');
+                if (i === currentQuestion) dot.classList.add('active');
+            });
+
+            /* Generar opciones */
+            quizOptions.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+            data.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option';
+                btn.setAttribute('role', 'radio');
+                btn.setAttribute('aria-checked', 'false');
+                btn.setAttribute('aria-label', `Opcion ${letters[i]}: ${opt}`);
+                btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+                btn.addEventListener('click', () => selectAnswer(i, btn));
+                quizOptions.appendChild(btn);
+            });
+
+            /* Ocultar feedback y boton siguiente */
+            quizFeedback.classList.remove('show', 'correct-fb', 'wrong-fb');
+            quizFeedback.textContent = '';
+            quizNextBtn.classList.remove('show');
+        }
+
+        /* Seleccionar respuesta */
+        function selectAnswer(index, btn) {
+            if (answered) return;
+            answered = true;
+
+            const data = quizData[currentQuestion];
+            const options = quizOptions.querySelectorAll('.quiz-option');
+
+            /* Deshabilitar todas las opciones */
+            options.forEach((opt, i) => {
+                opt.classList.add('disabled');
+                if (i === data.correct) {
+                    opt.classList.add('correct');
+                    opt.setAttribute('aria-checked', 'true');
+                }
+            });
+
+            if (index === data.correct) {
+                /* Respuesta correcta */
+                score++;
+                btn.classList.add('correct');
+                quizFeedback.textContent = 'Correcto. ' + data.explanation;
+                quizFeedback.classList.add('show', 'correct-fb');
+                progressDots[currentQuestion].classList.add('correct');
+            } else {
+                /* Respuesta incorrecta */
+                btn.classList.add('wrong');
+                quizFeedback.textContent = 'Incorrecto. ' + data.explanation;
+                quizFeedback.classList.add('show', 'wrong-fb');
+                progressDots[currentQuestion].classList.add('wrong');
+            }
+
+            /* Mostrar boton siguiente */
+            if (currentQuestion < quizData.length - 1) {
+                quizNextBtn.textContent = 'Siguiente';
+            } else {
+                quizNextBtn.textContent = 'Ver resultado';
+            }
+            quizNextBtn.classList.add('show');
+        }
+
+        /* Siguiente pregunta */
+        quizNextBtn.addEventListener('click', () => {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        });
+
+        /* Mostrar resultado */
+        function showResult() {
+            document.getElementById('quizBody').style.display = 'none';
+            quizResult.classList.add('show');
+            resultScore.textContent = `${score} / ${quizData.length}`;
+
+            const resultEmoji = document.querySelector('.result-emoji');
+            if (score === quizData.length) {
+                resultEmoji.textContent = '🏆';
+                resultText.textContent = 'Perfecto. Eres un experto en balonmano.';
+                resultText.style.color = 'var(--green)';
+            } else if (score >= quizData.length / 2) {
+                resultEmoji.textContent = '👏';
+                resultText.textContent = 'Muy bien. Sabes mucho de balonmano.';
+                resultText.style.color = 'var(--blue)';
+            } else {
+                resultEmoji.textContent = '💪';
+                resultText.textContent = 'Sigue practicando. Puedes volver a intentar.';
+                resultText.style.color = 'var(--orange)';
+            }
+        }
+
+        /* Reiniciar quiz */
+        quizRestartBtn.addEventListener('click', () => {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('quizBody').style.display = 'block';
+            quizResult.classList.remove('show');
+
+            /* Resetear puntos de progreso */
+            progressDots.forEach(dot => {
+                dot.classList.remove('correct', 'wrong', 'active');
+            });
+
+            loadQuestion();
+        });
+
+        /* Iniciar quiz */
+        loadQuestion();
+
+        /* ====================================
+           SCROLL REVEAL (IntersectionObserver)
+        ==================================== */
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        /* ====================================
+           FLIP CARDS — soporte táctil
+        ==================================== */
+        const flipCards = document.querySelectorAll('.flip-card');
+        flipCards.forEach(card => {
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.classList.toggle('flipped');
+                }
+            });
+            /* Soporte para dispositivos táctiles */
+            card.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                card.classList.toggle('flipped');
+            });
+        });
+
+        /* ====================================
+           PWA — Service Worker inline
+        ==================================== */
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE_NAME = 'balonmano-v1';
+                const urlsToCache = ['/'];
+
+                self.addEventListener('install', event => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+                    );
+                    self.skipWaiting();
+                });
+
+                self.addEventListener('fetch', event => {
+                    event.respondWith(
+                        caches.match(event.request).then(response => {
+                            return response || fetch(event.request);
+                        })
+                    );
+                });
+
+                self.addEventListener('activate', event => {
+                    event.waitUntil(
+                        caches.keys().then(keys =>
+                            Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+                        )
+                    );
+                    self.clients.claim();
+                });
+            `;
+
+            const swBlob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(swBlob);
+
+            navigator.serviceWorker.register(swUrl).catch(() => {
+                /* En algunos entornos sandbox el SW no se registra, lo ignoramos */
+            });
+        }
+
+        /* ====================================
+           PWA — Banner de instalación
+        ==================================== */
+        let deferredPrompt = null;
+        const pwaBanner = document.getElementById('pwaBanner');
+        const pwaInstallBtn = document.getElementById('pwaInstallBtn');
+        const pwaCloseBtn = document.getElementById('pwaCloseBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            setTimeout(() => pwaBanner.classList.add('show'), 2000);
+        });
+
+        pwaInstallBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                pwaBanner.classList.remove('show');
+            }
+        });
+
+        pwaCloseBtn.addEventListener('click', () => {
+            pwaBanner.classList.remove('show');
+        });
+
+        /* ====================================
+           ANIMACIÓN DE FONDO SUTIL — PARTÍCULAS
+        ==================================== */
+        (function initParticles() {
+            const canvas = document.createElement('canvas');
+            canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.35;';
+            canvas.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(canvas);
+
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            const particles = [];
+            const colors = ['#FF6B35', '#FFD60A', '#1B74E4', '#2ECC71', '#E74C3C'];
+            const PARTICLE_COUNT = 18;
+
+            /* Respetar prefers-reduced-motion */
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReducedMotion) return;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+
+            function createParticle() {
+                return {
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: Math.max(3, Math.random() * 8 + 3),
+                    dx: (Math.random() - 0.5) * 0.4,
+                    dy: (Math.random() - 0.5) * 0.4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    opacity: Math.random() * 0.3 + 0.1
+                };
+            }
+
+            function init() {
+                resize();
+                for (let i = 0; i < PARTICLE_COUNT; i++) {
+                    particles.push(createParticle());
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.x += p.dx;
+                    p.y += p.dy;
+
+                    /* Rebotar en los bordes */
+                    if (p.x < 0 || p.x > width) p.dx *= -1;
+                    if (p.y < 0 || p.y > height) p.dy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, Math.max(1, p.r), 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.opacity;
+                    ctx.fill();
+                });
+                ctx.globalAlpha = 1;
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', resize);
+            init();
+            animate();
+        })();
+
+        /* ====================================
+           SMOOTH SCROLL para enlaces internos
+        ==================================== */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
